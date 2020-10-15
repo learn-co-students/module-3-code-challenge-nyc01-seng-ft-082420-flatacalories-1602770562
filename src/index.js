@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const characterId = resetBtn.closest('div').dataset.characterId
         updateCharacter(characterId, {calories: 0})
       } 
-      else if(e.target.id === 'edit-btn') {
+      else if(e.target.textContent === 'edit-btn') {
         const newForm = document.querySelector('#new-form')
         newForm.id = 'edit-form'
         newForm.submit.value = 'Edit Character'
