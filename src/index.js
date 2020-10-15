@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             else if(e.target.matches("#edit-name")) {
                 const editButton = e.target
+                editButton.innerText = "Hide Form"
                 const detailedInfoDiv = document.querySelector("#detailed-info")
                 const characterId = editButton.parentElement.dataset.id
 
@@ -70,6 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 detailedInfoDiv.append(newNameForm)
 
             }
+            // else if(e.target.innerText === "Hide Form") {
+            //     console.log("hide")
+            // }
         })
     }
 
