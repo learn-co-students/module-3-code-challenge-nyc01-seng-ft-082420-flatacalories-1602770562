@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
       <p>${character.name}</p>
     </span>
     `
-
     // append!
     characterBar.append(characterDiv)
   }
@@ -32,9 +31,16 @@ document.addEventListener("DOMContentLoaded", () => {
 /* Deliverable 2: Select a character from characterBar and see info inside div */
 
   const clickHandler = () => {
-    const characterBar = document.querySelector("#character-bar")
-    characterBar.addEventListener("click", (e) => {
-      if (e.target.matches(""))
+    document.addEventListener("click", (e) => {
+      if (e.target.matches("span")){
+        console.log("this is working")
+        // const characterDiv = e.target
+        // set character name to a constant
+
+        // select the detailed info div
+          // name should be the character's name
+          // image should be character's image
+      }
     })
 
   }
@@ -44,5 +50,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   getCharacters();
-
+  clickHandler();
 })
