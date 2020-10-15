@@ -30,7 +30,7 @@ As a user, I can:
 
 2. Select a character from the character bar and see character's info inside `#detailed-info` div.  -->
 
-3. Clicks on "Add Calories" button to add calories to a Character. Persist calories value to the server and update the DOM.
+<!-- 3. Clicks on "Add Calories" button to add calories to a Character. Persist calories value to the server and update the DOM. -->
 
 ## Advanced Deliverables
 
@@ -38,8 +38,8 @@ These deliverables are not required to pass the code challenge, but if you have 
 
 > Note: If you are going to attempt these advanced deliverables, please be sure to have a working commit with all the Core Deliverables first!
 
-As a user, I can:
-- Clicks on a `Reset Calories` button to set calories to `0`. Persist calories value to the server and update the DOM.
+<!-- As a user, I can:
+- Clicks on a `Reset Calories` button to set calories to `0`. Persist calories value to the server and update the DOM. -->
 - Change character's name
 - Add a new character
 
