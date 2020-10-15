@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     characterBar.append(characterDiv)
   }
 
+
 /* Deliverable 2: Select a character from characterBar and see info inside div */
 
   const clickHandler = () => {
@@ -39,12 +40,14 @@ document.addEventListener("DOMContentLoaded", () => {
         characterName.textContent = name
 
         // image should be character's image
-        let characterImage = document.querySelector("#image")
         // image is hidden - need a function to keep it hidden until called on
+        let characterImage = document.querySelector("#image")
+        // characterImage.src = image
         
-        // calories should be character's calories
+        /* calories should be character's calories*/
+        /* calories also hidden - need a function to display hidden until called on */
         let characterCalories = document.querySelector("#calories")
-        // calories also hidden - need a function to keep hidden until called on
+        // characterCalories.textContent = calories
 
       }
     })
@@ -54,7 +57,13 @@ document.addEventListener("DOMContentLoaded", () => {
 /* Deliverable 3: Clicking on add calories will add calories, will persist*/
 
   const addCalories = () => {
-    
+    const form = document.querySelector("#form")
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+
+      const addCaloriesBtn = e.target
+      
+    })
   }
 
 
