@@ -45,26 +45,26 @@ document.addEventListener('DOMContentLoaded', e => {
     })
   }
 
-  // const setCalories = (calories) ={
-  //   options = {
-  //     method: "PATCH",
-  //     headers: {
-  //       "content-type" : "application/json",
-  //       "accept" : "application/json"
-  //     },
-  //     body: JSON.stringify({
-  //       calories: calories
-  //     })
-  //   }
-  //
-  //
-  //   fetch(baseUrl + cId, options)
-  //   .then(response => response.json())
-  //   .then(cData => {
-  //     let calories = document.getElementById('calories')
-  //     calories.textContent = cData.calories
-  //   })
-  // }
+  const setCalories = (calories) => {
+    options = {
+      method: "PATCH",
+      headers: {
+        "content-type" : "application/json",
+        "accept" : "application/json"
+      },
+      body: JSON.stringify({
+        calories: calories
+      })
+    }
+
+
+    fetch(baseUrl + cId, options)
+    .then(response => response.json())
+    .then(cData => {
+      let calories = document.getElementById('calories')
+      calories.textContent = cData.calories
+    })
+  }
 
   const submitHandler = () => {
     const caloriesForm = document.getElementById('calories-form')
@@ -73,29 +73,8 @@ document.addEventListener('DOMContentLoaded', e => {
 
       const calorieCount = caloriesForm.querySelector('#calories').value
       const cId = caloriesForm.dataset.characterId
-      // console.log(calorieCount)
-      // console.log(cId)
 
-      // setCalories(calorieCount)
-
-      options = {
-        method: "PATCH",
-        headers: {
-          "content-type" : "application/json",
-          "accept" : "application/json"
-        },
-        body: JSON.stringify({
-          calories: calorieCount
-        })
-      }
-
-
-      fetch(baseUrl + cId, options)
-      .then(response => response.json())
-      .then(cData => {
-        let calories = document.getElementById('calories')
-        calories.textContent = cData.calories
-      })
+      setCalories(calorieCount)
     })
 
   }
