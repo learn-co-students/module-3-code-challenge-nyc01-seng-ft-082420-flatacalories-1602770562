@@ -11,9 +11,18 @@ function getCharacters() {
     .then(response => response.json())
     .then(chars => {
         CHARACTERS = chars
-        renderCharacters(CHARACTERS)
+        renderCharacters(chars)
     })
 }
+
+function updateCharacters() {
+    fetch(CHAR_URL)
+    .then(response => response.json())
+    .then(chars => {
+        CHARACTERS = chars
+    })
+}
+
 
 function renderCharacters(characters) {
     for(character of characters) {
@@ -62,6 +71,28 @@ function addCalories(id, calories) {
         const charData = document.querySelector(`[data-id="${id}"]`)
         let currentCalories = parseInt(charData.children[2].firstElementChild.innerText)
         charData.children[2].firstElementChild.innerText = currentCalories + parseInt(calories)
+        updateCharacters()
+    }
+}
+
+function resetCalories(id) {
+    const charData = document.querySelector(`[data-id="${id}"]`)
+    let currentCalories = parseInt(charData.children[2].firstElementChild.innerText)
+    options = {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify( {"calories": 0 } )
+    }
+    if(id != undefined && calories != "") {
+        fetch(CHAR_URL + id, options)
+        .then(response => response.json())
+        .then(console.log)
+        const charData = document.querySelector(`[data-id="${id}"]`)
+        charData.children[2].firstElementChild.innerText = 0
+        updateCharacters()
     }
 }
 
@@ -70,9 +101,18 @@ function clickHandler() {
         if(e.target.matches("span")) {
             const char = e.target
             const infoDiv = document.querySelector("#detailed-info")
-            // console.log(e.target)
             renderCharacterInfo(char, infoDiv)
         }
+        // if(e.target.matches("button#reset-btn")) {
+        //     console.log(e.target)
+        // }
+    })
+    const resetBtn = document.querySelector("button#reset-btn")
+    resetBtn.addEventListener('click', e => {
+        // console.log(e.target.parentElement.dataset.id)
+        const char = e.target.parentElement.dataset.id
+        const infoDiv = document.querySelector("#detailed-info")
+        resetCalories(char)
     })
 }
 
