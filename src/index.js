@@ -14,11 +14,11 @@ const displayCharacters = () => {
         const charactersDiv = document.querySelector('#character-bar')
         console.log(charactersDiv)
         for(const character of data){
-
         displayOneCharacter(character, charactersDiv)
         }
     })
 }
+
 const displayOneCharacter = (character, charactersDiv) => {
     const characterSpan = document.createElement('span')
     characterSpan.innerHTML = character.name
@@ -27,6 +27,7 @@ const displayOneCharacter = (character, charactersDiv) => {
     })
     charactersDiv.append(characterSpan)
 }
+
 const displayCharacterInfo = (character) => {
     const infoDiv = document.querySelector('#detailed-info')
     // 'detailed-info' is coming from ReadMe
@@ -35,16 +36,16 @@ const displayCharacterInfo = (character) => {
     const infoCalorie = document.querySelector('#calories')
     const infoId = document.querySelector('#characterId')
     infoId.value = character.id
-    // check JSON to confirm exact wording 
+    // check db.json to confirm exact wording 
 
     infoName.innerHTML = character.name
     infoImg.src = character.image
     infoCalorie.innerHTML = character.calories
 }
 // src for images 
-const calorieForm = () => {
-    const buttomForm = document.querySelector('#calories-form')
-    buttomForm.addEventListener('submit', e => {
+    const calorieForm = () => {
+        const buttomForm = document.querySelector('#calories-form')
+        buttomForm.addEventListener('submit', e => {
         e.preventDefault()
         // forgot to use the preventDefault in mock yesterday ** 
         const infoId = document.querySelector('#characterId')
@@ -58,7 +59,8 @@ const calorieForm = () => {
 
         // this was tricky took a while to actually find the value (500) i inputted
 
-        // ** when trying to add to get the newtotal calories need to parse Int each indiv above because parseInt just total calorie did NOT WORK
+        // ** when trying to add to get the newtotal calories need to parseInt each indiv above because parseInt just total calorie did NOT WORK
+        // when adding 500+700 kept getting 500700
 
         var options = {
             method: "PATCH",
@@ -89,15 +91,13 @@ const resetCalories = () => {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({calories: 0 })
         }
-
         fetch(baseUrl + characterid, options)
         infoCalorie.innerHTML = 0
-
     })
 }
 displayCharacters()
 calorieForm()
 resetCalories()
-// make sure to call in correct place** 
+// make sure to call in correct place not inside another function b/c it wont work** 
 
 })
