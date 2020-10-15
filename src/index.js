@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   const baseUrl = "http://localhost:3000/characters/"
   const charBar = document.querySelector('#character-bar')
   const charDetailsDiv = document.querySelector('#detailed-info')
+  // const charInfoDiv = document.querySelector('.characterInfo')
 
   const getChars = () => {
     fetch(baseUrl)
@@ -35,23 +36,30 @@ document.addEventListener("DOMContentLoaded", () =>{
   const renderChar = character => {
     const charSpan = document.createElement('span')
     charSpan.textContent = character.name
+    charSpan.classList.add('render-span')
     charSpan.dataset.charId = character.id 
     charBar.append(charSpan)
 
   }
 
   const renderCharDetails = character => {
-    const charDetailsDiv = document.querySelector('#detailed-info')
+    
     charDetailsDiv.innerHTML = `
-    <p id="${character.name}">${character.name}</p>
-    <img id="image" src="${character.image}">
-    <h4>Total Calories: <span id="${character.calories}">${character.calories}</span> </h4>
+      <p id="${character.name}">${character.name}</p>
+      <img id="image" src="${character.image}">
+      <h4>Total Calories: <span id="${character.calories}">${character.calories}</span> </h4>
+      <form id="calories-form">
+      <input type="hidden" value="Character's id" id="${character.id}"/> <!-- Assign character id as a value here -->
+      <input type="text" placeholder="Enter Calories" id="${character.calories}"/>
+      <input type="submit" value="Add Calories"/>
+      </form>
+      <button id="reset-btn">Reset Calories</button>
     `
   }
 
   const clickHandler = () => {
     document.addEventListener('click', e => {
-      if(e.target.matches('[data-char-id]')) {
+      if(e.target.matches('.render-span')) {
         const charSpanId = e.target.dataset.charId 
         
         fetch(baseUrl + charSpanId)
@@ -61,6 +69,8 @@ document.addEventListener("DOMContentLoaded", () =>{
         })
         
       }
+
+      
     })
 
 
