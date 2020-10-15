@@ -49,6 +49,10 @@ document.addEventListener('DOMContentLoaded', e => {
                 const charBtn = e.target
                 const charId = charBtn.dataset.id
                 getSingleCharacter(charId)
+            }else if (e.target.matches('.reset-btn')) {
+                //would add reset function
+
+
             }
         })
     }
@@ -91,13 +95,14 @@ document.addEventListener('DOMContentLoaded', e => {
 
 
 /*
-get data from server
-add span tag with name to character bar
+*get data from server
+*add span tag with name to character bar
 
 
-click character to see all info in #detailed-info div
+*click character to see all info in #detailed-info div
 
-add calories button adds calories to character
+*add calories button adds calories to character
 
-
+reset calories: clickHandler
+maybe refactor a calories function for both adding and resetting calories
 */
