@@ -76,29 +76,31 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
   const submitHandler = () => {
-    const addCalForm = document.getElementById('calories-form')
-    addCalForm.addEventListener('submit', e => {
+    
+    document.addEventListener('submit', e => {
       e.preventDefault()
 
-      if(e.target.matches('button')){
-        console.log(e.target)
+      const addCalForm = e.target
+      const charId = addCalForm.data.charId 
+      const newCal = addCalForm.children[1].value
+
+
+      
+      options = {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+          "accept": "application/json"
+        },
+        body: JSON.stringify({calories: newCal})
       }
 
-      // .children[1].value
-      // options = {
-      //   method: "PATCH",
-      //   headers: {
-      //     "content-type": "application/json",
-      //     "accept": "application/json"
-      //   },
-      //   body: JSON.stringify({calories: newCal})
-      // }
-
-      // fetch(baseUrl + charId, options)
-      // .then(response => response.json())
-      // .then(character => {
-      //   const charDetailsDiv = document.querySelector('#detailed-info')
-      // })
+      fetch(baseUrl + charId, options)
+      .then(response => response.json())
+      .then(character => {
+        const charDetailsDiv = document.querySelector('#detailed-info')
+        charDetailsDiv.querySelector('h4').textContent = character.calories
+      })
 
     })
 
