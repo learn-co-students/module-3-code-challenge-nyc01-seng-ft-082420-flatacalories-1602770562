@@ -31,26 +31,42 @@ document.addEventListener('DOMContentLoaded', e => {
         if(e.target.matches('.char')){
             const button = e.target
             const charId = button.dataset.id
-            console.log(charId)
-            const name = button.innerText
+
+            fetch(baseUrl + charId)
+            .then(resp => resp.json())
+            .then(char => charInfoToDom(char))
             
             
             
-            const charInfo = document.querySelector(".characterInfo")
+            const charInfoToDom = (char) => {
+
+                const charInfo = document.querySelector(".characterInfo")
+                charInfo.dataset.id = char.id
+                
+        
+                charInfo.innerHTML = `
+                <div data-id="${char.id} "id="detailed-info">
+                <p id="name">${char.name}</p>
+                <img id="image" src="${char.image}"><!-- display character image here -->
+                <h4>Total Calories: <span id="calories">${char.calories}</span> </h4>
+                <form id="calories-form">
+                    <input type="hidden" value="Character's id" id="characterId"/> <!-- Assign character id as a value here -->
+                    <input type="text" placeholder="Enter Calories" id="calories"/>
+                    <input type="submit" value="Add Calories" class="addCalories" data-id="${char.id}"/>
+                </form>
+                <button id="reset-btn">Reset Calories</button>
+            </div>
+                `
+            }
+        }
+        else if(e.target.matches('.addCalories')){
+            e.preventDefault()
+            const addButton = e.target
+            const charId = addButton.dataset.id
+            const currentCalories = addButton.closest('h4')
+            console.log(currentCalories)
             
-            charInfo.innherHTML = `
-            <div id="detailed-info">
-            <p id="name">${name}</p>
-            <img id="image" src="assets/dummy.gif"><!-- display character image here -->
-            <h4>Total Calories: <span id="calories">Character's Calories</span> </h4>
-            <form id="calories-form">
-                <input type="hidden" value="Character's id" id="characterId"/> <!-- Assign character id as a value here -->
-                <input type="text" placeholder="Enter Calories" id="calories"/>
-                <input type="submit" value="Add Calories"/>
-            </form>
-            <button id="reset-btn">Reset Calories</button>
-        </div>
-            `
+
         }
     })
 
