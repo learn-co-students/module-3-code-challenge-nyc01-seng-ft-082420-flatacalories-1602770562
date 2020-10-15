@@ -25,7 +25,7 @@ function renderCharacters(characters) {
 function renderCharacterSpan(character, div) {
     const charSpan = document.createElement("span")
     charSpan.innerText = character.name
-    charSpan.dataset.id = character.id
+    // charSpan.dataset.id = character.id
     div.append(charSpan)
 }
 
@@ -39,7 +39,29 @@ function renderCharacterInfo(character, div) {
             div.children[0].innerText = char.name
             div.children[1].src = char.image
             header.children[0].innerText = char.calories
+            div.dataset.id = char.id
         }
+    }
+}
+
+function addCalories(id, calories) {
+    const charData = document.querySelector(`[data-id="${id}"]`)
+    let currentCalories = parseInt(charData.children[2].firstElementChild.innerText)
+    options = {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify( {"calories": currentCalories + parseInt(calories)} )
+    }
+    if(id != undefined && calories != "") {
+        fetch(CHAR_URL + id, options)
+        .then(response => response.json())
+        .then(console.log)
+        const charData = document.querySelector(`[data-id="${id}"]`)
+        let currentCalories = parseInt(charData.children[2].firstElementChild.innerText)
+        charData.children[2].firstElementChild.innerText = currentCalories + parseInt(calories)
     }
 }
 
@@ -58,7 +80,11 @@ function submitHandler() {
     document.addEventListener('submit', e => {
         e.preventDefault()
         if(e.target.matches("form")) {
-            console.log(e.target)
+            const charId = e.target.parentElement.dataset.id
+            const calories = e.target.calories.value
+            e.target.characterId.id = e.target.parentElement.dataset.id
+            addCalories(charId, calories)
+            e.target.reset()
         }
     })
 }
