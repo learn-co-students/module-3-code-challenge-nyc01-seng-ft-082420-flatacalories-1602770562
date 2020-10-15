@@ -116,6 +116,7 @@ document.addEventListener('DOMContentLoaded', e => {
         .then(cData => {
           nameHeader = document.getElementById('name')
           nameHeader.textContent = cData.name
+          getCharacters()
         })
       })
     })
