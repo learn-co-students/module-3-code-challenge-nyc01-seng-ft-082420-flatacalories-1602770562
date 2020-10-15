@@ -8,13 +8,14 @@ Your base URL for your API will be: http://localhost:3000
 √√ 1. See all characters names in a `div` with the id of `"character-bar"`. On page load, **request** data from the server to get all of the characters objects. When you have this information, you'll need to add a `span` tag with the character's name to the character bar.
 
 2. Select a character from the character bar and see character's info inside `#detailed-info` div. 
-  - click handler for span
-  - get fetch for id endpoint
-  - render to detailed info
-    - clear deatialed prior to append
+  √ - click handler for span
+  √ - get fetch for id endpoint
+  √- render to detailed info
 
 3. Clicks on "Add Calories" button to add calories to a Character. Persist calories value to the server and update the DOM.
-
+  √ - watch for form submit
+  - fetch post
+  - update calroies on DOM
 */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -25,6 +26,12 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(baseUrl)
     .then(response => response.json())
     .then(renderCharacters)
+  }
+
+  const getOneCharacter = (id) => {
+    fetch(baseUrl + id)
+    .then(response => response.json())
+    .then(renderDetailedCharacter)
   }
 
   const renderCharacters = (characters) => {
@@ -41,7 +48,36 @@ document.addEventListener("DOMContentLoaded", () => {
     charBar.append(charSpan)
   }
 
+  const renderDetailedCharacter = (character) => {
+    let detailedDiv = document.querySelector('#detailed-info');
 
+    detailedDiv.querySelector('#name').textContent = character.name
+    detailedDiv.querySelector('#calories').textContent = character.calories
+    detailedDiv.querySelector('#image').src = character.image
+
+    watchFormSubmit(character.id)
+  }
   
+
+  const clickHandler = () => {
+    let charBar = document.querySelector('#character-bar');
+    charBar.addEventListener('click', e => {
+      if(e.target.matches('span')){
+        let id = e.target.dataset.id
+        getOneCharacter(id)
+      }
+    })
+  }
+
+  const watchFormSubmit = (id) => {
+    // console.log(id)
+    const calorieForm = document.querySelector('#calories-form');
+    calorieForm.addEventListener('submit', e => {
+      e.preventDefault();
+      console.log(id)
+    })
+  }
+
+  clickHandler()
   getCharacters()
 })
