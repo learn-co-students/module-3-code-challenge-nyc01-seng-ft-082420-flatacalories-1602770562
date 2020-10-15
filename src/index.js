@@ -1,4 +1,5 @@
 const url = "http://localhost:3000/characters/"
+
 document.addEventListener('DOMContentLoaded', () => {
   const renderCharacter = (character) => {
     const characterBar = document.querySelector('#character-bar')
@@ -92,9 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   }
 
+/* -------------- */
 
   renderData()
   clickHandler()
   submitHandler()
-
 })
