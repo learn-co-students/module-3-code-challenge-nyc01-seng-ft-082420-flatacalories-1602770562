@@ -15,16 +15,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const renderChar = char => {
-        const charDiv = document.querySelector('#character-bar')
+        const charDiv = document.createElement("span")
         charDiv.dataset.id = char.id
+        charDiv.classList.add
         charDiv.innerHTML = `
 
         <span> ${char.name} </span>
 
         
         `
+        console.log(charDiv)
+        
 
-    
     }
 
 
