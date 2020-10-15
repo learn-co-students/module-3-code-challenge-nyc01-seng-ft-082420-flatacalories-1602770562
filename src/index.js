@@ -46,13 +46,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const renderCharacterInfo = (character) => {
         const detailedDiv = document.querySelector("div#detailed-info")
+        detailedDiv.dataset.id = `${character.id}`
+
+        const detailedP = document.querySelector("p")
+
+        detailedP.innerHTML= `${character.name}`
+
+        const detailedImage = document.querySelector("img#image")
+        detailedImage.innerHTML = `${character.image} `
+        
+        // detailedDiv.append(detailedP, detailedImage)
+    console.log(detailedImage)
        
-        detailedDiv.innerHTML = `
-        <p id="name">"${character.name}"</p>
-        <img src="${character.image}">
-        `
-       
-        console.log(detailedDiv)
     }
     
     
