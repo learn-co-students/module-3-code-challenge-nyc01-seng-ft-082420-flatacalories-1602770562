@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () =>{
       <img id="image" src="${character.image}">
       <h4>Total Calories: <span id="${character.calories}">${character.calories}</span> </h4>
       <form id="calories-form">
-      <input type="hidden" value="Character's id" id="${character.id}"/> <!-- Assign character id as a value here -->
+      <input type="hidden" value="Character's id" id="${character.id}"/> 
       <input type="text" placeholder="Enter Calories" id="${character.calories}"/>
       <input type="submit" value="Add Calories"/>
       </form>
@@ -70,12 +70,43 @@ document.addEventListener("DOMContentLoaded", () =>{
         
       }
 
-      
+    })
+
+  }
+
+
+  const submitHandler = () => {
+    const addCalForm = document.getElementById('calories-form')
+    addCalForm.addEventListener('submit', e => {
+      e.preventDefault()
+
+      if(e.target.matches('button')){
+        console.log(e.target)
+      }
+
+      // .children[1].value
+      // options = {
+      //   method: "PATCH",
+      //   headers: {
+      //     "content-type": "application/json",
+      //     "accept": "application/json"
+      //   },
+      //   body: JSON.stringify({calories: newCal})
+      // }
+
+      // fetch(baseUrl + charId, options)
+      // .then(response => response.json())
+      // .then(character => {
+      //   const charDetailsDiv = document.querySelector('#detailed-info')
+      // })
+
     })
 
 
   }
 
+
+  submitHandler()
   clickHandler()
   getChars()
 })
