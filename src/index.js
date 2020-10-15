@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const renderChar = char => {
         const charSpan = document.createElement('span')
-        charSpan.innerHTML = `${char.name}`
+        charSpan.innerHTML = `<span data-char-id=${char.id}>${char.name}</span>`
         const charName = document.querySelector('#name')
         
         charBar.append(charSpan)
@@ -29,11 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const clickHandler = () => {
         charBar.addEventListener('click', e => {
-            const charSpan = e.target.innerHTML
-            const char = charSpan.parentElement
-            console.log(char)
+            const charSpan = e.target
+            const nameBar = e.target.innerHTML
+            console.log(charSpan)
             const charName = document.querySelector('#name')
-            charName.innerHTML = `${charSpan}`
+            charName.innerHTML = `${nameBar}`
+
+            
+            
             
             
         })
