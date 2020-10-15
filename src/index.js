@@ -45,6 +45,22 @@ document.addEventListener('DOMContentLoaded', () => {
                             <button id="reset-btn">Reset Calories</button>  
                         `
                     })
+            } else if (e.target.matches("#reset-btn")) {
+                const calSpan = document.querySelector('#calories')
+                const options = {
+                    method: "PATCH",
+                    headers: {
+                        "content-type": "application/json",
+                        "accept": "application/json"
+                    },
+                    body: JSON.stringify({ calories: 0 })
+                }
+
+                fetch(BASE_URL + charId, options)
+                    .then(response => response.json())
+                    .then(_data => {
+                        calSpan.textContent = 0
+                    })
             }
         })
     }
