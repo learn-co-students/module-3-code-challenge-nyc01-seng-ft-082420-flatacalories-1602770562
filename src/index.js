@@ -78,4 +78,50 @@ document.addEventListener('DOMContentLoaded', e => {
   clickHandler()
   submitHandler()
 
+  // --- Advanced ---
+
+  const changeName = (newName) => {
+    const resetBtn = document.getElementById('reset-btn')
+    const editNameBtn = document.createElement('button')
+    editNameBtn.textContent = "Edit Name"
+    resetBtn.insertAdjacentElement("afterend", editNameBtn)
+
+    editNameBtn.addEventListener('click', e => {
+      const nameForm = document.createElement('form')
+      nameForm.innerHTML = `
+        <input type="text" placeholder="Enter Name" id="name-field">
+        <input type="submit" value="Edit Name">
+      `
+      nameHeader = document.getElementById('name')
+      nameHeader.insertAdjacentElement("afterend", nameForm)
+      nameForm.addEventListener('submit', e => {
+        e.preventDefault()
+        let newName = nameForm.querySelectorAll('input')[0].value
+        // console.log(newName)
+        nameForm.reset()
+        options = {
+          method: "PATCH",
+          headers: {
+            "content-type" : "application/json",
+            "accept" : "application/json"
+          },
+          body: JSON.stringify({
+            name: newName
+          })
+        }
+
+
+        fetch(baseUrl + cId, options)
+        .then(response => response.json())
+        .then(cData => {
+          nameHeader = document.getElementById('name')
+          nameHeader.textContent = cData.name
+        })
+      })
+    })
+  }
+
+
+  changeName()
+
 })
