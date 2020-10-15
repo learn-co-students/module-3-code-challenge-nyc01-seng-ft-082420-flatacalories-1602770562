@@ -1,6 +1,6 @@
 # Flatacalories
 Today you'll be building an app for counting calories!! You will be using a local API and building out the frontend for our app, Flatacalories.
-
+## Gabriel Hicks 10/15/20
 ## Demo
 Use this gif as an example of how the app should work.
 
