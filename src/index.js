@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     getCharacters()
     clickHub()
     //submitHub()
+    //Couldn't get submit button to work properly so to avoid issue I just bundled the functions for the patch request in the click listener
     
     
     function getCharacters() {
@@ -37,12 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function renderCharInfo(obj) {
        
                     
-        // const infoCard = document.getElementById('detailed-info')
-        // infoCard.innerHTML = ('')
-        // const pTag = document.createElement('p')
-        // const imgTag = document.createElement('img')
-        // const hTag = document.createElement('h4')
-        // const spanTag = document.createElement('span')
+        
         const pTag = document.getElementById("name")
         const imgTag = document.getElementById("image")
         const hTag = document.getElementById("calories")
@@ -174,7 +170,7 @@ document.addEventListener("DOMContentLoaded", function() {
     //                 body: JSON.stringify({calories: newCalories})
     //             }
 
-    //             fetch(CHAR_URL + charId).then(function(response) {
+    //             fetch(CHAR_URL + charId, options).then(function(response) {
     //                 return response.json()
     //             }).then(function(data) {
     //                 renderCharInfo(data)
