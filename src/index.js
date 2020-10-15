@@ -49,6 +49,40 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
+    function submitHandler(){
+        document.addEventListener('submit', e => {
+            e.preventDefault()
+            const form = document.querySelector('#calories-form')
+            const charId = form.parentElement.dataset.charId
+            form.children[0].id = charId
+            const currentCals = parseInt(form.previousElementSibling.querySelector("span").textContent);
+            const calSpan = form.previousElementSibling.querySelector("span")
+            const newCals = parseInt(form.calories.value)
+            const totalCals = currentCals + newCals
+            console.log(newCals);
+
+            const options = {
+                method: "PATCH",
+                headers: {
+                    "content-type": "application/json",
+                    "accept": "application/json"
+                },
+                body: JSON.stringify({calories: totalCals})
+            }
+
+            fetch(BASE_URL + charId, options)
+                .then(response => response.json())
+                .then(_data => {
+                    calSpan.textContent = totalCals
+                })
+
+            form.reset()
+            
+            
+            
+        })
+    }
+    submitHandler();
     clickHandler();
     getCharacters()
 })
