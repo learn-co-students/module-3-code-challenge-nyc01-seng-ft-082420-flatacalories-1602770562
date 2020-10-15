@@ -24,6 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const name = document.querySelector('#name')
     const image = document.querySelector('#image')
     const calories = document.querySelector('#calories')
+    const form = document.querySelector('#calories-form')
+
+    form.setAttribute("data-character-id",`${character.id}`)
+    const cells = form.children
+    const enterCol = cells[1]
+    enterCol.setAttribute('name','calories')
+    enterCol.setAttribute('value',"0")
+    enterCol.id = character.id
 
     name.textContent = character.name
     image.src = character.image
@@ -47,9 +55,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const submitHandler = () =>{
     document.addEventListener('submit',e=>{
       e.preventDefault()
-      const form = e.target
-      const currentCol = document.querySelector('#calories')
-      console.log(form,currentCol)
+      const input = e.target
+      const form = document.querySelector('#calories-form')
+      characterId = form.dataset.characterId
+      console.log(characterId)
+      const currentCol = parseInt(document.querySelector('#calories').textContent)
+      const inputCol = parseInt(form.calories.value)
+
+      const newCol = currentCol + inputCol
+
+      const options = {
+        method: "PATCH",
+        headers:{
+          "content-type": "application/json",
+          "accept": "application/json"
+        },
+        body: JSON.stringify({calories: newCol})
+      }
+      fetch(url + characterId,options)
+      .then(resp => resp.json())
+      .then(renderInfo)
+      form.reset()
     })
   }
 
