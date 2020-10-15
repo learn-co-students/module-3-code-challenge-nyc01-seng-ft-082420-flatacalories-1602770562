@@ -12,6 +12,7 @@ function getCharacters() {
     .then(chars => {
         CHARACTERS = chars
         renderCharacters(chars)
+        // randomCharacter()
     })
 }
 
@@ -23,6 +24,13 @@ function updateCharacters() {
     })
 }
 
+// function randomCharacter() {
+//     let random = CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)]
+//     console.log(random)
+//     const charDiv = document.querySelector("#character-bar")
+//     renderCharacterInfo(random, charDiv)
+// }
+
 
 function renderCharacters(characters) {
     for(character of characters) {
@@ -30,6 +38,20 @@ function renderCharacters(characters) {
         renderCharacterSpan(character, charDiv)
     }
 }
+
+// function editCharacterInfo(id) {
+//     options = {
+//         method: "PATCH",
+//         headers: {
+//             "Content-Type": "application/json",
+//             Accept: "application/json"
+//         },
+//         body: JSON.stringify( {} )
+//     }
+//     fetch(CHAR_URL + id)
+//     .then(response => response.json())
+//     .then()
+// }
 
 function renderCharacterSpan(character, div) {
     const charSpan = document.createElement("span")
@@ -39,16 +61,15 @@ function renderCharacterSpan(character, div) {
 }
 
 function renderCharacterInfo(character, div) {
-    // console.log(character)
-    // console.log(div)
     for(char of CHARACTERS) {
         if(character.innerText == char.name) {
-            const name = div.children[0]
+            const editBtn = document.querySelector("button#edit")
             const header = div.children[2]
             div.children[0].innerText = char.name
             div.children[1].src = char.image
             header.children[0].innerText = char.calories
             div.dataset.id = char.id
+            // div.append(editBtn)
         }
     }
 }
@@ -111,8 +132,14 @@ function clickHandler() {
     resetBtn.addEventListener('click', e => {
         // console.log(e.target.parentElement.dataset.id)
         const char = e.target.parentElement.dataset.id
-        const infoDiv = document.querySelector("#detailed-info")
         resetCalories(char)
+    })
+    const editBtn = document.querySelector("button#edit")
+    editBtn.addEventListener('click', e => {
+        // console.log(e.target.parentElement.dataset.id)
+        const char = e.target.parentElement.dataset.id
+        console.log(char)
+        const infoDiv = document.querySelector("#detailed-info")
     })
 }
 
