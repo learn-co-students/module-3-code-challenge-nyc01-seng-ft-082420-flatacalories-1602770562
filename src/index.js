@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const getChar = () => {
         fetch(baseUrl)
         .then(resp => resp.json())
-        .then(renderChar)
+        .then(renderChars)
 
     }
 
@@ -15,9 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const renderChar = char => {
-        const charDiv = document.createElement("span")
+        const charDiv = document.createElement('div')
         charDiv.dataset.id = char.id
-        charDiv.classList.add
+        charDiv.classList.add('name')
         charDiv.innerHTML = `
 
         <span> ${char.name} </span>
@@ -25,6 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
         
         `
         console.log(charDiv)
+
+        charDiv.append(charDiv)
+        
         
 
     }
