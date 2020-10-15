@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
   const baseUrl = 'http://localhost:3000/characters/'
+  const characterBar = document.querySelector('#character-bar')
 
   const getCharacters = () => {
+    characterBar.innerHTML = ''
+
     fetch(baseUrl)
       .then(response => response.json())
       .then(characters => {
@@ -12,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const renderCharacterBar = characterObj => {
-    const characterBar = document.querySelector('#character-bar')
+    
     const characterSpan = document.createElement('span')
 
     characterSpan.dataset.characterId = characterObj.id
@@ -21,14 +24,31 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const clickHandler = () => {
-    const characterBar = document.querySelector('#character-bar')
-    characterBar.addEventListener('click', e => {
-      if(e.target.matches('span')) {
+    document.addEventListener('click', e => {
+      if(e.target.matches('span[data-character-id]')) {
         const characterSpan = e.target
         const characterId = characterSpan.dataset.characterId
         getCharacterDetail(characterId)
-      } else if(e.target.id === 'reset-btn') {
-        console.log('reset those calories')
+      } 
+      else if(e.target.id === 'reset-btn') {
+        const resetBtn = e.target
+        const characterId = resetBtn.closest('div').dataset.characterId
+        updateCharacter(characterId, {calories: 0})
+      } 
+      else if(e.target.id === 'edit-btn') {
+        const newForm = document.querySelector('#new-form')
+        newForm.id = 'edit-form'
+        newForm.submit.value = 'Edit Character'
+        const characterDiv = newForm.nextElementSibling
+
+        newForm.style.display = 'block'
+        newForm.name.value = characterDiv.querySelector('p').textContent
+        newForm.image.value = characterDiv.querySelector('img').src
+
+      } 
+      else if(e.target.id === 'new-btn') {
+        const newForm = document.querySelector('#new-form')
+        newForm.style.display = 'block'
       }
     })
   }
@@ -53,32 +73,85 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const submitHandler = () => {
-    const caloriesForm = document.querySelector('#calories-form')
-    caloriesForm.addEventListener('submit', e => {
-      e.preventDefault()
-      const caloriesForm = e.target
-      const characterId = caloriesForm.closest('div').dataset.characterId
 
-      const currentCalories = parseInt(document.querySelector('#calories').textContent)
-      const caloriesToAdd = parseInt(caloriesForm.querySelector('#calories').value)
-      const updatedCalories = currentCalories + caloriesToAdd
-      
-      caloriesForm.reset()
-      
-      const options = {
-        method: "PATCH",
-        headers: {
-          "content-type": "application/json",
-          "accept": "application/json"
-        },
-        body: JSON.stringify({calories: updatedCalories})
+    document.addEventListener('submit', e => {
+      if(e.target.id ==='calories-form') {
+        e.preventDefault()
+        const caloriesForm = e.target
+        const characterId = caloriesForm.closest('div').dataset.characterId
+  
+        const currentCalories = parseInt(document.querySelector('#calories').textContent)
+        const caloriesToAdd = parseInt(caloriesForm.querySelector('#calories').value)
+        const updatedCalories = currentCalories + caloriesToAdd
+        
+        caloriesForm.reset()
+        
+        updateCharacter(characterId,{calories: updatedCalories})
+      } 
+      else if(e.target.id ==='new-form') {
+        e.preventDefault()
+        const newForm = document.querySelector('#new-form')
+        const newCharacter = {
+          name: newForm.name.value,
+          image: newForm.image.value,
+          calories: 0
+        }
+
+        newForm.reset()
+        createCharacter(newCharacter)
+      }
+      else if(e.target.id === 'edit-form') {
+        e.preventDefault()
+        const editForm = document.querySelector('#edit-form')
+        const charId = editForm.nextElementSibling.dataset.characterId
+
+        const updatedInfo = {
+          name: editForm.name.value,
+          image: editForm.image.value
+        }
+        editForm.reset()
+        updateCharacter(charId, updatedInfo)
       }
 
-      fetch(baseUrl + characterId, options)
-        .then(response => response.json())
-        .then(renderCharacterDetail)
-      
-    })
+      })
+
+  }
+
+  const updateCharacter = (characterId, updatedChar) => {
+    if (characterId === undefined) return
+
+    const options = {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+        "accept": "application/json"
+      },
+      body: JSON.stringify(updatedChar)
+    }
+
+    fetch(baseUrl + characterId, options)
+      .then(response => response.json())
+      .then(renderCharacterDetail)
+
+  }
+
+  const createCharacter = characterObj => {
+    const options = {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "accept": "application/json"
+      },
+      body: JSON.stringify(characterObj)
+    }
+    
+    fetch(baseUrl, options)
+      .then(response => response.json())
+      .then(_char =>{
+        const newForm = document.querySelector('#new-form')
+        newForm.style.display = 'none'
+        getCharacters()
+      })
   }
 
   submitHandler()

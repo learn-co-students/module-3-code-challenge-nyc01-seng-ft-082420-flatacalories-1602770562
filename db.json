@@ -4,23 +4,23 @@
       "id": 1,
       "name": "Mr. Cute",
       "image": "https://thumbs.gfycat.com/EquatorialIckyCat-max-1mb.gif",
-      "calories": 0
+      "calories": 1000
     },
     {
       "id": 2,
-      "name": "Mr. Monkey",
+      "name": "Mrs. Monkey",
       "image": "https://thumbs.gfycat.com/FatalInnocentAmericanshorthair-max-1mb.gif",
-      "calories": 1400
+      "calories": 1111
     },
     {
       "id": 3,
-      "name": "Miss. Zebra",
+      "name": "Mr. Zebra",
       "image": "https://media2.giphy.com/media/20G9uNqE3K4dRjCppA/source.gif",
-      "calories": 0
+      "calories": 555
     },
     {
       "id": 4,
-      "name": "Master Lion",
+      "name": "Mr Lion",
       "image": "http://bestanimations.com/Animals/Mammals/Cats/Lions/animated-lion-gif-11.gif",
       "calories": 0
     },
@@ -35,6 +35,12 @@
       "name": "Mrs. Monkey",
       "image": "https://cdn.dribbble.com/users/1832502/screenshots/4387756/monkeyanim.gif",
       "calories": 0
+    },
+    {
+      "name": "Mr. Floof",
+      "image": "https://www.thesprucepets.com/thmb/sfuyyLvyUx636_Oq3Fw5_mt-PIc=/3760x2820/smart/filters:no_upscale()/adorable-white-pomeranian-puppy-spitz-921029690-5c8be25d46e0fb000172effe.jpg",
+      "calories": 10110,
+      "id": 7
     }
   ]
 }
