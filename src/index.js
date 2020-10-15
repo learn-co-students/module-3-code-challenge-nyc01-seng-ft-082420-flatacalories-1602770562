@@ -36,20 +36,25 @@ document.addEventListener('DOMContentLoaded', (e) => {
     })
   }
 
-  const submitHandler = () =>{
+  const submitHandler = (e) =>{
+      const name = document.querySelector("#name")
+      const image = document.querySelector("#image")
+      const calories = document.querySelector("#calories")
       console.log(form)
       document.addEventListener("submit", (e) => {
        e.preventDefault()
-      console.log("anything")
-      updateCalories()
+       const char = {name: name.textContent, calories: parseint(calories.textContent)}
+      console.log(e.target.name)
+      
+      updateCalories(char)
 
     })
 }
   
-    const updateCalories = () =>{
-        const currentCalories = parseInt(document.querySelector("#calories").textContent)
-        const newCalories ={calories: form.calories+currentCalories}
+    const updateCalories = (char) =>{
         
+        const newCalories ={calories: form.calories+char.calories}
+        console.log(baseURL + form.characterId)
         const options = {
             method: 'PATCH',
              headers: {
