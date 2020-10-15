@@ -25,17 +25,23 @@ document.addEventListener('DOMContentLoaded', () => {
         charDiv.appendChild(charSpan)
     }
 
-    const clickCharacter = () => {
-    const charInfoDiv = document.getElementById('detailed-info')
-    //const imageId = document.getElementById('image')
-        charDiv.addEventListener('click', (e) => {
-    //        document.getElementById("character-bar").click();
-    //        if e.target = character.name
-
+    const selectCharacter = () => {
+        const charSpan = document.querySelector('span')
+        document.addEventListener('click', e => {
+        if (e.target.textContent = charID){
+        populateDetailInfo
+        }
         })
+
+        const populateDetailInfo = () => {
+            const charInfoDiv = document.getElementById('detailed-info')
+            const imageId = document.getElementById('image')
+            .characterInfo
+        }
     }
+        
 
 
     getCharacters()
-    clickCharacter()
+    selectCharacter()
 })
