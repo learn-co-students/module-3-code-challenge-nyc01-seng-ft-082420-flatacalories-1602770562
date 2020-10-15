@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', e => {
      charSpan.dataset.id = char.id
      charSpan.classList.add('char')
      charSpan.innerText = `${char.name}`
-     console.log(charSpan)
 
      characterBar.append(charSpan)
  }
@@ -51,7 +50,7 @@ document.addEventListener('DOMContentLoaded', e => {
                 <h4>Total Calories: <span id="calories">${char.calories}</span> </h4>
                 <form id="calories-form">
                     <input type="hidden" value="Character's id" id="characterId"/> <!-- Assign character id as a value here -->
-                    <input type="text" placeholder="Enter Calories" id="calories"/>
+                    <input type="text" name="calories" placeholder="Enter Calories" id="calories"/>
                     <input type="submit" value="Add Calories" class="addCalories" data-id="${char.id}"/>
                 </form>
                 <button id="reset-btn">Reset Calories</button>
@@ -63,8 +62,26 @@ document.addEventListener('DOMContentLoaded', e => {
             e.preventDefault()
             const addButton = e.target
             const charId = addButton.dataset.id
-            const currentCalories = addButton.closest('h4')
-            console.log(currentCalories)
+            const buttonParent = addButton.parentElement
+            const addedCalories = buttonParent.children[1].value
+            
+            
+            const form = document.querySelector('#calories-form')
+            form.dataset.id = charId
+
+            addedCalories = form.calories.value
+            
+            options = {
+             method: "PATCH",
+             headers: {
+                 "content-type": "application/json",
+                 "accept": "application/json"
+             },
+             body: 
+            }
+            
+
+
             
 
         }
