@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
 /* Deliverable 2: Select a character from characterBar and see info inside div */
 
   const clickHandler = () => {
-    const characterSpan = document.querySelector("span")
     document.addEventListener("click", e => {
       if (e.target.matches("span")){
         const characterSpan = e.target
@@ -39,8 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
         let characterName = document.querySelector("#name")
         characterName.textContent = name
 
-        // image should be character's image
-        // image is hidden - need a function to keep it hidden until called on
+        /* image should be character's image */
+        /* image is hidden - need a function to keep it hidden until called on */
         let characterImage = document.querySelector("#image")
         // characterImage.src = image
         
@@ -61,8 +60,29 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", e => {
       e.preventDefault();
 
-      const addCaloriesBtn = e.target
-      
+      const form = e.target
+      // select button, where button dataset id should be character's
+      const formId = document.form.button.dataset.id = characterDiv.dataset.id
+
+
+
+      form.calories.value = calories
+
+      const newCalories = {calories: calories}
+
+      const options= {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+          "accept": "application/json"
+        },
+        body: JSON.stringify({newCalories})
+      } 
+
+      // get request back to the character
+
+      fetch(baseUrl // + characterId, options)
+        // getCharacters()
     })
   }
 
