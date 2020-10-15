@@ -1,14 +1,15 @@
 document.addEventListener('DOMContentLoaded', (e) => {
   const charContainer = document.querySelector("#character-bar")
   const baseURL = "http://localhost:3000/characters/"
-
+  const form = document.querySelector("#calories-form")
+console.log(form)
   const renderCharacter = (character) => {
     const charSpan = document.createElement("span")
     charSpan.textContent = `${character.name}`
     charSpan.dataset.charId = `${character.id}`
     charContainer.append(charSpan)
-
   }
+
   const renderCharacters = (characters) => {
     for (character of characters) {
       renderCharacter(character)
@@ -21,6 +22,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
         .then(characters => renderCharacters(characters))
       )
   }
+
   const clickHandler = () => {
     document.addEventListener("click", (e) => {
       e.preventDefault()
@@ -32,16 +34,32 @@ document.addEventListener('DOMContentLoaded', (e) => {
   }
 
   const submitHandler = () => {
-    document.addEventListener("submit", (e) => {
-      e.preventDefault()
-      const target = e.target
+    form.addEventListener("submit", (e) => {
       
+      const target = e.target
+      console.log(target.name)
+      updateCalories(form)
+
     })
   }
+    const updateCalories = (form) =>{
+        const currentCalories = parseInt(ocument.querySelector("#calories").textContent)
+        const newCalories ={calories: form.calories+currentCalories}
+        const options = {
+            method: 'PATCH',
+             headers: {
+                'Content-Type': 'application/json'
+            }, 
+            body: JSON.stringify(newCalories)
+        }
 
+
+        fetch(baseURL + form.characterId, options)
+        .then(resp => (resp.json())
+        .then(character => renderStats(character))
+        )}
 
   const getStats = (charId) => {
-    const charSpan = document.queryselctor
     fetch(baseURL + charId)
       .then(resp => (resp.json())
         .then(character => renderStats(character))
@@ -61,4 +79,5 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
   getCharacters()
   clickHandler()
+  submitHandler()
 })
