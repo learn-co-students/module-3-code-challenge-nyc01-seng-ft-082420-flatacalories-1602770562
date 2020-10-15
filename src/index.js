@@ -17,10 +17,26 @@ document.addEventListener('DOMContentLoaded', e => {
         charBar.append(charSpan)
     }
 
+    const renderCharPage = char => {
+        const charPage = document.querySelector('#detailed-info')
+        const nameP = charPage.querySelector('#name')
+        const img = charPage.querySelector('#image')
+        const caloriesSpan = charPage.querySelector('#calories')
+        nameP.innerText = `${char.name}`
+        img.src = `${char.image}`
+        caloriesSpan.innerText = `${char.calories}`
+    }
+
     const getCharacters = () => {
         fetch(baseUrl)
         .then(response => response.json())
         .then(characters => renderCharactersBar(characters))
+    }
+
+    const getSingleCharacter = charId => {
+        fetch(baseUrl + charId)
+        .then(response => response.json())
+        .then(char => renderCharPage(char))
     }
 
 
@@ -29,7 +45,7 @@ document.addEventListener('DOMContentLoaded', e => {
             if (e.target.matches('.char-btn')) {
                 const charBtn = e.target
                 const charId = charBtn.dataset.id
-                console.log(charId)
+                getSingleCharacter(charId)
             }
         })
     }
