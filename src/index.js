@@ -134,13 +134,13 @@ function clickHandler() {
         const char = e.target.parentElement.dataset.id
         resetCalories(char)
     })
-    const editBtn = document.querySelector("button#edit")
-    editBtn.addEventListener('click', e => {
-        // console.log(e.target.parentElement.dataset.id)
-        const char = e.target.parentElement.dataset.id
-        console.log(char)
-        const infoDiv = document.querySelector("#detailed-info")
-    })
+    // const editBtn = document.querySelector("button#edit")
+    // editBtn.addEventListener('click', e => {
+    //     // console.log(e.target.parentElement.dataset.id)
+    //     const char = e.target.parentElement.dataset.id
+    //     console.log(char)
+    //     const infoDiv = document.querySelector("#detailed-info")
+    // })
 }
 
 function submitHandler() {
