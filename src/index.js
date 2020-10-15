@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const getCharacters = () => {
     fetch(baseUrl)
       .then(response => response.json())
-      // .then(data => console.log(data))
       .then(characters => renderCharacters(characters))
   }
 
@@ -21,28 +20,41 @@ document.addEventListener("DOMContentLoaded", () => {
     characterDiv.dataset.id = character.id
     characterDiv.innerHTML = `
     <span>
-      <p>${character.name}</p>
+      ${character.name}
     </span>
     `
-    // append!
     characterBar.append(characterDiv)
   }
 
 /* Deliverable 2: Select a character from characterBar and see info inside div */
 
   const clickHandler = () => {
-    document.addEventListener("click", (e) => {
+    const characterSpan = document.querySelector("span")
+    document.addEventListener("click", e => {
       if (e.target.matches("span")){
-        console.log("this is working")
-        // const characterDiv = e.target
-        // set character name to a constant
+        const characterSpan = e.target
 
-        // select the detailed info div
-          // name should be the character's name
-          // image should be character's image
+        const name = characterSpan.textContent
+        let characterName = document.querySelector("#name")
+        characterName.textContent = name
+
+        // image should be character's image
+        let characterImage = document.querySelector("#image")
+        // image is hidden - need a function to keep it hidden until called on
+        
+        // calories should be character's calories
+        let characterCalories = document.querySelector("#calories")
+        // calories also hidden - need a function to keep hidden until called on
+
       }
     })
 
+  }
+
+/* Deliverable 3: Clicking on add calories will add calories, will persist*/
+
+  const addCalories = () => {
+    
   }
 
 
