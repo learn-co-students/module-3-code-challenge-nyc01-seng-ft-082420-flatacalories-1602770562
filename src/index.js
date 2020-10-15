@@ -1,3 +1,5 @@
+
+
 document.addEventListener('DOMContentLoaded', function() {
 
 const url = "http://localhost:3000/characters/"
@@ -44,6 +46,44 @@ const renderCharacterDetail = charId =>{
     })
 
 }
+
+const submitHandler = () =>{
+    const form = document.getElementById('calories-form')
+    form.addEventListener('submit', e =>{
+        e.preventDefault()
+        const calories = document.getElementById('calories')
+        console.log(calories.textContent)
+        
+        const characterId = calories.dataset.id
+        
+        const characterForm = e.target
+        const newCals = characterForm.calories.value
+        console.log(newCals)
+
+        const officialCal = newCals + calories.textContent
+        calories.textContent = officialCal
+        console.log(officialCal)
+
+        const newValue = {calories: officialCal}
+
+        const options = {
+            method: "PATCH",
+            headers: {
+              "content-type": "application/json",
+              "accept": "application/json"
+            },
+            body: JSON.stringify(newValue)
+          }
+          
+          fetch(url + characterId , options)
+          .then(res=> res.json())
+          .then(_characters => {getCharacters()
+        })
+    
+
+    })
+}
+submitHandler()
 
 function clickHandler(){
     const span = document.querySelector('#character-bar')
