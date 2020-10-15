@@ -136,6 +136,27 @@ document.addEventListener("DOMContentLoaded", function() {
                     renderCharInfo(data)
                 })
                 
+            } else if (e.target.matches("#reset-btn")) {
+                //const calories = document.getElementById("calories")
+                const id = document.getElementById("characterId")
+                const charId = id.value
+                const urlId = parseInt(charId)
+                
+                options = {
+                    method: "PATCH",
+                    headers: {
+                        "content-type" : "application/json",
+                        "accept": "application/json"
+                    },
+        
+                    body: JSON.stringify({calories: 0})
+                }
+        
+                fetch(CHAR_URL + urlId, options).then(function(response) {
+                    return response.json()
+                }).then(function(data) {
+                    renderCharInfo(data)
+                })
             }
             
         })
@@ -182,7 +203,9 @@ document.addEventListener("DOMContentLoaded", function() {
     // }
 
 
+    //Reset Caloies
 
+    
 
 
 
