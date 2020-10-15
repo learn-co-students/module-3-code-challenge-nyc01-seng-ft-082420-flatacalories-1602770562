@@ -34,6 +34,8 @@ function clickHandler() {
     document.addEventListener("click", e => {
         if (e.target.matches(".char-span")) {
             fetchInfo(e.target)
+        } else if (e.target.matches("#reset-btn")) {
+            resetCals()
         }
     })
 }
@@ -57,9 +59,9 @@ function renderInfo(charObj) {
     <img id="image" src=${charObj.image}>
     <h4>Total Calories: <span id="calories">${charObj.calories}</span> </h4>
     <form id="calories-form">
-        <input type="hidden" value="${charObj.id}" id="characterId"/>
-        <input type="text" placeholder="Enter Calories" id="calories" name="calories"/>
-        <input type="submit" data-id="${charObj.id} value="Add Calories"/>
+        <input type="hidden" value="${charObj.id}" id="characterId"/> 
+        <input type="text" placeholder="Enter Calories" id="calories"/>
+        <input type="submit" value="Add Calories"/>
     </form>
     <button id="reset-btn">Reset Calories</button>
     `
@@ -96,4 +98,22 @@ function renderUpdatedCals(obj) {
     //console.log(document.querySelector("#calories"))
     document.querySelector("#calories").innerHTML = obj.calories
     //.textContent = obj.calories
+}
+
+function resetCals() {
+    const reset = document.querySelector("#reset-btn")
+    const patch = {
+        calories : 0
+    }
+    const options = {
+        method: "PATCH",
+        headers: {
+            "content-type" :"application/json",
+            accept: "application/json"
+        },
+        body: JSON.stringify(patch) 
+    }
+    fetch(BASE_URL + currentId, options)
+    .then(res => res.json())
+    .then(renderUpdatedCals)
 }
