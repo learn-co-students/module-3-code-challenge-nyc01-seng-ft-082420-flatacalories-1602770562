@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
   const charContainer = document.querySelector("#character-bar")
   const baseURL = "http://localhost:3000/characters/"
   const form = document.querySelector("#calories-form")
-console.log(form)
+ 
   const renderCharacter = (character) => {
     const charSpan = document.createElement("span")
     charSpan.textContent = `${character.name}`
@@ -25,35 +25,39 @@ console.log(form)
 
   const clickHandler = () => {
     document.addEventListener("click", (e) => {
-      e.preventDefault()
+     
       const target = e.target
       if (target.matches("span")) {
         getStats(target.dataset.charId)
       }
+    //   if (target.textContent === "Add Calories") {
+    //       console.log(target)
+    //   }
     })
   }
 
-  const submitHandler = () => {
-    form.addEventListener("submit", (e) => {
-      
-      const target = e.target
-      console.log(target.name)
-      updateCalories(form)
+  const submitHandler = () =>{
+      console.log(form)
+      document.addEventListener("submit", (e) => {
+       e.preventDefault()
+      console.log("anything")
+      updateCalories()
 
     })
-  }
-    const updateCalories = (form) =>{
-        const currentCalories = parseInt(ocument.querySelector("#calories").textContent)
+}
+  
+    const updateCalories = () =>{
+        const currentCalories = parseInt(document.querySelector("#calories").textContent)
         const newCalories ={calories: form.calories+currentCalories}
+        
         const options = {
             method: 'PATCH',
              headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "accept": "application/json"
             }, 
             body: JSON.stringify(newCalories)
         }
-
-
         fetch(baseURL + form.characterId, options)
         .then(resp => (resp.json())
         .then(character => renderStats(character))
