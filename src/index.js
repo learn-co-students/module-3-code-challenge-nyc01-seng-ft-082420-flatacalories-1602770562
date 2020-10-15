@@ -44,6 +44,7 @@ function fetchInfo(target) {
     fetch(BASE_URL + target.dataset.id)
     .then(res => res.json())
     .then(renderInfo)
+    .catch(error => console.log(error.message))
 }
 
 function renderInfo(charObj) {
@@ -60,7 +61,7 @@ function renderInfo(charObj) {
     <h4>Total Calories: <span id="calories">${charObj.calories}</span> </h4>
     <form id="calories-form">
         <input type="hidden" value="${charObj.id}" id="characterId"/> 
-        <input type="text" placeholder="Enter Calories" id="calories"/>
+        <input type="text" placeholder="Enter Calories" id="kcal" />
         <input type="submit" value="Add Calories"/>
     </form>
     <button id="reset-btn">Reset Calories</button>
@@ -70,13 +71,16 @@ function renderInfo(charObj) {
 
 
 
+//seems to be an issue with my form - "form.calories.value" isn't grabbing the inputted value
+
 function submitHandler() {
     const form = document.querySelector("#calories-form")
     document.addEventListener("submit", e => {
         e.preventDefault()
-        console.log(form.calories.value)
+        form.reset()
+        console.log(document.querySelector("#kcal").value)
         const patch = {
-            calories : currentCalories += form.calories.value
+            calories : currentCalories += parseInt(document.querySelector("#kcal").value)
         }
         const options = {
             method: "PATCH",
@@ -89,7 +93,7 @@ function submitHandler() {
         fetch(BASE_URL + currentId, options)
         .then(res => res.json())
         .then(renderUpdatedCals)
-        form.reset()
+        .catch(error => console.log(error.message))
         
     })
 }
@@ -116,4 +120,5 @@ function resetCals() {
     fetch(BASE_URL + currentId, options)
     .then(res => res.json())
     .then(renderUpdatedCals)
+    .catch(error => console.log(error.message))
 }
