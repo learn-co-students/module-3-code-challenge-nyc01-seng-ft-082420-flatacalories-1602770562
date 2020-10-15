@@ -63,13 +63,18 @@ document.addEventListener('DOMContentLoaded', e => {
             const addButton = e.target
             const charId = addButton.dataset.id
             const buttonParent = addButton.parentElement
+            const currentCalories = addButton.closest('h4').innertext
+            // tried getting the h4 for the calories last minute
             const addedCalories = buttonParent.children[1].value
+        
+            const newCalories = currentCalories + addedCalories
+            console.log(currentCalories)
             
             
             const form = document.querySelector('#calories-form')
             form.dataset.id = charId
 
-            addedCalories = form.calories.value
+            form.calories.value = newCalories
             
             options = {
              method: "PATCH",
@@ -77,9 +82,12 @@ document.addEventListener('DOMContentLoaded', e => {
                  "content-type": "application/json",
                  "accept": "application/json"
              },
-             body: 
+             body: JSON.stringify(newCalories)
             }
             
+            fetch(baseUrl + charId, options)
+            .then(resp => resp.json())
+            .then(fetchCharacters())
 
 
             
