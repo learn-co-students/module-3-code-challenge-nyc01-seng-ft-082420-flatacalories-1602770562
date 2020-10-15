@@ -27,6 +27,7 @@ const displayOneCharacter = (character, charactersDiv) => {
     })
     charactersDiv.append(characterSpan)
 }
+// need to append to display 
 
 const displayCharacterInfo = (character) => {
     const infoDiv = document.querySelector('#detailed-info')
@@ -99,5 +100,6 @@ displayCharacters()
 calorieForm()
 resetCalories()
 // make sure to call in correct place not inside another function b/c it wont work** 
+// changing name/ adding new character come back to**
 
 })
