@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const renderCharacter = (character) => {
         // console.log(character)
         const characterSpan = document.createElement("span")
+        characterSpan.dataset.id = `${character.id}`
         characterSpan.innerHTML = ` ${character.name} `
         // console.log(characterSpan)
         barDiv.append(characterSpan)
@@ -31,9 +32,27 @@ document.addEventListener("DOMContentLoaded", () => {
 //1. clickEvent one character from the "character-bar" and see the info inside #detailed-info div
     const clickHandler = () => {
         document.addEventListener('click', (e) => {
-            const 
-
+            const characterId = e.target.dataset.id 
+            // console.log(characterId)
+            getCharacter(characterId)
         })
+    }
+
+    const getCharacter = (characterId) => {
+        fetch(fetchUrl + characterId)
+        .then(response => response.json())
+        .then(singleCharacter => renderCharacterInfo(singleCharacter))
+    }
+
+    const renderCharacterInfo = (character) => {
+        const detailedDiv = document.querySelector("div#detailed-info")
+       
+        detailedDiv.innerHTML = `
+        <p id="name">"${character.name}"</p>
+        <img src="${character.image}">
+        `
+       
+        console.log(detailedDiv)
     }
     
     
