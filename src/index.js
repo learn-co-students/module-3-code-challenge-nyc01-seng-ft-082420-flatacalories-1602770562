@@ -82,7 +82,8 @@ DONE - When you have this information, you'll need to add a span tag with the ch
         document.addEventListener("submit", e => {
             e.preventDefault();
             const form = e.target
-            const textArea = 
+            const textArea = form[1].value
+            
         })
     }
     
