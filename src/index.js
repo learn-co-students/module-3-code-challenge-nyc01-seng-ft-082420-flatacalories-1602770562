@@ -1,3 +1,5 @@
+//disabled buttons on initial screen render - character must be selected to press buttons
+
 const BASE_URL = 'http://localhost:3000/characters/'
 let currentCalories;
 let currentId;
@@ -104,6 +106,7 @@ function renderUpdatedCals(obj) {
 
 function resetCals() {
     const reset = document.querySelector("#reset-btn")
+    currentCalories = 0
     const patch = {
         calories : 0
     }
