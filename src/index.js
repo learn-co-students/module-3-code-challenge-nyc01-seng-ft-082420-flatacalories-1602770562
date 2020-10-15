@@ -34,6 +34,24 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(renderDetailedCharacter)
   }
 
+  const addCalories = (id, newCalories) => {
+    let options = {
+      method: "PATCH",
+      headers: {
+        "content-type":"application/json",
+        "accept":"application/json"
+      },
+      body: JSON.stringify({
+        calories: newCalories
+      })
+    }
+
+    fetch(baseUrl + id, options)
+    .then(response => response.json())
+    // .then(console.log)
+    .then(renderDetailedCharacter)
+  }
+
   const renderCharacters = (characters) => {
     for(const character of characters){
       renderCharacter(character)
@@ -52,10 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
     let detailedDiv = document.querySelector('#detailed-info');
 
     detailedDiv.querySelector('#name').textContent = character.name
-    detailedDiv.querySelector('#calories').textContent = character.calories
+    let calories = detailedDiv.querySelector('#calories').textContent = character.calories
     detailedDiv.querySelector('#image').src = character.image
 
-    watchFormSubmit(character.id)
+    watchFormSubmit(character.id, calories)
   }
   
 
@@ -69,12 +87,15 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
-  const watchFormSubmit = (id) => {
-    // console.log(id)
+  const watchFormSubmit = (id, calories) => {
     const calorieForm = document.querySelector('#calories-form');
     calorieForm.addEventListener('submit', e => {
       e.preventDefault();
-      console.log(id)
+      let caloriesAdding = calorieForm.calories.value
+      console.log(calories)
+      newCalories = parseInt(calories)+ parseInt(caloriesAdding)
+      addCalories(id, newCalories)
+      calorieForm.reset()
     })
   }
 
