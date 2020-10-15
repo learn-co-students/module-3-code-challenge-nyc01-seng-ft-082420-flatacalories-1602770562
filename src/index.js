@@ -52,8 +52,6 @@ function renderInfo(charObj) {
     currentCalories = parseInt(charObj.calories)
     currentId = charObj.id;
 
-    // console.log(currentCalories)
-
     const infoDiv = document.querySelector("#detailed-info")
     infoDiv.innerHTML = `
     <p id="name">${charObj.name}</p>
@@ -71,37 +69,37 @@ function renderInfo(charObj) {
 
 
 
-//seems to be an issue with my form - "form.calories.value" isn't grabbing the inputted value
+
 
 function submitHandler() {
     const form = document.querySelector("#calories-form")
     document.addEventListener("submit", e => {
         e.preventDefault()
-        form.reset()
-        console.log(document.querySelector("#kcal").value)
-        const patch = {
-            calories : currentCalories += parseInt(document.querySelector("#kcal").value)
+
+        //Only should run patch request if calorie number has been entered
+        if (document.querySelector("#kcal").value !== "") {
+            const patch = {
+                calories : currentCalories += parseInt(document.querySelector("#kcal").value)
+            }
+            const options = {
+                method: "PATCH",
+                headers: {
+                    "content-type" :"application/json",
+                    accept: "application/json"
+                },
+                body: JSON.stringify(patch) 
+            }
+            fetch(BASE_URL + currentId, options)
+            .then(res => res.json())
+            .then(renderUpdatedCals)
+            .catch(error => console.log(error.message))
+            form.reset()
         }
-        const options = {
-            method: "PATCH",
-            headers: {
-                "content-type" :"application/json",
-                accept: "application/json"
-            },
-            body: JSON.stringify(patch) 
-        }
-        fetch(BASE_URL + currentId, options)
-        .then(res => res.json())
-        .then(renderUpdatedCals)
-        .catch(error => console.log(error.message))
-        
     })
 }
 
 function renderUpdatedCals(obj) {
-    //console.log(document.querySelector("#calories"))
     document.querySelector("#calories").innerHTML = obj.calories
-    //.textContent = obj.calories
 }
 
 function resetCals() {
