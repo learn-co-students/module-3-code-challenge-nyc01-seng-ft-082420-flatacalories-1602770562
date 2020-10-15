@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', e => {
     const renderCharSpan = char => {
         let charSpan = document.createElement('span')
         charSpan.innerText = `${char.name}`
-        //charSpan.setAttribute('data', "id: '${char.id}'")
+        charSpan.dataset.id = char.id
+        charSpan.classList.add('char-btn')
         charBar.append(charSpan)
     }
 
@@ -23,9 +24,21 @@ document.addEventListener('DOMContentLoaded', e => {
     }
 
 
+    const clickHandler = () => {
+        document.addEventListener('click', e => {
+            if (e.target.matches('.char-btn')) {
+                const charBtn = e.target
+                const charId = charBtn.dataset.id
+                console.log(charId)
+            }
+        })
+    }
+
+
 
 
     getCharacters()
+    clickHandler()
 })
 
 
