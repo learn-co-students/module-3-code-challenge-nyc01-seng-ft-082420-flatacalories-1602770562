@@ -25,23 +25,45 @@ document.addEventListener('DOMContentLoaded', () => {
         charDiv.appendChild(charSpan)
     }
 
-    const selectCharacter = () => {
+    const selectCharacter = (character) => {
         const charSpan = document.querySelector('span')
-        document.addEventListener('click', e => {
-        if (e.target.textContent = charID){
-        populateDetailInfo
-        }
-        })
-
-        const populateDetailInfo = () => {
-            const charInfoDiv = document.getElementById('detailed-info')
-            const imageId = document.getElementById('image')
-            .characterInfo
-        }
-    }
+        const charInfoDiv = document.getElementById('detailed-info')
         
 
+        document.addEventListener('click', e => {
+        if (e.target.textContent = character){
+            charInfoDiv.dataset.id = charSpan.dataset.id
+        }
+        charInfoDiv.append(charSpan)
+        })
+    }
 
+    //     const populateDetailInfo = (character) => {
+    //         const charSpan = document.querySelector('span')
+    //         const charInfoDiv = document.getElementById('#detailed-info')
+    //     //    const imageId = document.getElementById('image')
+    //     //     .characterInfo
+        
+        //     if (charInfoDiv.dataset.id = charSpan.dataset.id){
+
+        //     const options = {
+        //         method: "POST",
+        //         headers: {
+        //             "content-type": "application/json",
+        //             "accept": "application/json"
+        //         },
+        //         body: JSON.stringify(character)
+        //     }
+        // }
+
+    //     fetch(baseUrl + charSpan, options)
+    //     .then(resp => resp.json())
+    //     .then(_characters => {
+    //         getCharacters()
+    //     })
+    // }
+        
     getCharacters()
     selectCharacter()
+   // populateDetailInfo()
 })
