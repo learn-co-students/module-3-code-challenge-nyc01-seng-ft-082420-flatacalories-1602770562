@@ -25,6 +25,9 @@ document.addEventListener('DOMContentLoaded', e => {
         nameP.innerText = `${char.name}`
         img.src = `${char.image}`
         caloriesSpan.innerText = `${char.calories}`
+        const calForm = charPage.querySelector('#calories-form')
+        calForm.reset()
+        calForm.querySelector('#characterId').value = `${char.id}`
     }
 
     const getCharacters = () => {
@@ -50,11 +53,39 @@ document.addEventListener('DOMContentLoaded', e => {
         })
     }
 
+    const submitHandler = () => {
+        document.addEventListener('submit', e => {
+            e.preventDefault()
+            const calForm = e.target
+            const id = calForm.characterId.value
+            const addCalories = calForm.calories.value
+            const charPage = document.querySelector('#detailed-info')
+            const caloriesSpan = charPage.querySelector('#calories')
+            const oldCalories = caloriesSpan.innerText
+            const totalCalories = parseInt(addCalories, 10) + parseInt(oldCalories, 10)
+            const calories = {calories: `${totalCalories}`}
+
+            const options = {
+                method: "PATCH", 
+                headers: {
+                    "content-type": "application/json",
+                    "accept": "application/json"
+                }, 
+                body: JSON.stringify(calories)
+            }
+
+            fetch(baseUrl + id, options)
+            .then(response => response.json())
+            .then(_char => getSingleCharacter(id))
+        })
+    }
+
 
 
 
     getCharacters()
     clickHandler()
+    submitHandler()
 })
 
 
