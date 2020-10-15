@@ -22,13 +22,13 @@
       "id": 4,
       "name": "Mr. Lion",
       "image": "http://bestanimations.com/Animals/Mammals/Cats/Lions/animated-lion-gif-11.gif",
-      "calories": 0
+      "calories": 50
     },
     {
       "id": 5,
       "name": "Mr. Panda",
       "image": "https://media.giphy.com/media/ALalVMOVR8Qw/giphy.gif",
-      "calories": 0
+      "calories": 8
     },
     {
       "id": 6,

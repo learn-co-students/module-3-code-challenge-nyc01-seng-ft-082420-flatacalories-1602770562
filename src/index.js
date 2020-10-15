@@ -107,13 +107,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     body: JSON.stringify({ calories: totalCals })
                 }
-                
+                if (Number(newCals)) {
                     fetch(BASE_URL + charId, options)
                         .then(response => response.json())
                         .then(_data => {
                             calSpan.textContent = totalCals
                         })
-                form.reset()
+                    form.reset()
+                } else {
+                    alert("numbers only, please!")
+                    form.reset()
+                }
+                
             
             } else if (e.target.matches("#change-name-form")){
                 e.preventDefault()
