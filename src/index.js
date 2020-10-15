@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const image = document.querySelector('#image')
     const calories = document.querySelector('#calories')
     const form = document.querySelector('#calories-form')
-
+    const resetButton = document.querySelector('#reset-btn')
+    resetButton.setAttribute("data-character-id",`${character.id}`)
     form.setAttribute("data-character-id",`${character.id}`)
     const cells = form.children
     const enterCol = cells[1]
@@ -40,14 +41,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const clickHandler = () =>{
     document.addEventListener('click', e=>{
-      const characterId = e.target.dataset.characterId
-
+      const button = e.target
+      const characterId = button.dataset.characterId
       if (characterId){
         fetch(url + characterId)
         .then(resp =>resp.json())
         .then(character =>{
           renderInfo(character)
         })
+      }
+
+      if(button.textContent == "Reset Calories"){
+        const characterId = button.dataset.characterId
+        const options = {
+          method: "PATCH",
+          headers:{
+            "content-type": "application/json",
+            "accept": "application/json"
+          },
+          body: JSON.stringify({calories: 0})
+        }
+        fetch(url + characterId, options)
+        .then(resp => resp.json())
+        .then(renderInfo)
       }
     })
   }
@@ -58,12 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const input = e.target
       const form = document.querySelector('#calories-form')
       characterId = form.dataset.characterId
-      console.log(characterId)
       const currentCol = parseInt(document.querySelector('#calories').textContent)
       const inputCol = parseInt(form.calories.value)
-
       const newCol = currentCol + inputCol
-
       const options = {
         method: "PATCH",
         headers:{
