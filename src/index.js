@@ -1,11 +1,3 @@
-/*
-## Core Deliverables
-
-As a user, I can:
-
-3. Clicks on "Add Calories" button to add calories to a Character. Persist calories value to the server and update the DOM.
-*/
-
 document.addEventListener('DOMContentLoaded', () => {
     const BASEURL = "http://localhost:3000/characters/"
 
@@ -43,6 +35,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(response => response.json())
                 .then(characterObj => renderCharacterDiv(characterObj))
             }
+            else if(e.target.matches("#reset-btn")) {
+                const resetButton = e.target
+                const characterId = resetButton.parentElement.dataset.id
+
+                options = {
+                    method: "PATCH",
+                    headers: {
+                        "content-type": "application/json",
+                        "accept": "application/json"
+                    },
+                    body: JSON.stringify({ calories: 0 })
+                }
+    
+                fetch(BASEURL + characterId, options)
+                .then(response => response.json())
+                .then(characterObj => renderCharacterDiv(characterObj))
+
+            }
+            else if(e.target.matches("#edit-name")) {
+                const editButton = e.target
+                const detailedInfoDiv = document.querySelector("#detailed-info")
+                const characterId = editButton.parentElement.dataset.id
+
+                const newNameForm = document.createElement("form")
+                newNameForm.id = "newNameForm"
+
+                newNameForm.innerHTML = `
+                    <input type="hidden" value="Character's id" id="${characterId}"/> <!-- Assign character id as a value here -->
+                    <input type="text" placeholder="Enter New Name" id="newName"/>
+                    <input type="submit" value="Change Name"/>
+                `
+                
+                detailedInfoDiv.append(newNameForm)
+
+            }
         })
     }
 
@@ -60,6 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <input type="submit" value="Add Calories"/>
             </form>
             <button id="reset-btn">Reset Calories</button>
+            <button id="edit-name">Edit Name</button>
+            <br><br>
         `
 
     }
