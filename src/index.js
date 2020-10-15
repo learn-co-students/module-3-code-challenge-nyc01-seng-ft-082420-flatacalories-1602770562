@@ -38,17 +38,34 @@ document.addEventListener("DOMContentLoaded", () =>{
     charSpan.dataset.charId = character.id 
     charBar.append(charSpan)
 
+  }
+
+  const renderCharDetails = character => {
+    const charDetailsDiv = document.querySelector('#detailed-info')
     charDetailsDiv.innerHTML = `
     <p id="${character.name}">${character.name}</p>
-    <img id="${character.image}" src="assets/dummy.gif">
+    <img id="image" src="${character.image}">
     <h4>Total Calories: <span id="${character.calories}">${character.calories}</span> </h4>
     `
+  }
+
+  const clickHandler = () => {
+    document.addEventListener('click', e => {
+      if(e.target.matches('[data-char-id]')) {
+        const charSpanId = e.target.dataset.charId 
+        
+        fetch(baseUrl + charSpanId)
+        .then(response => response.json())
+        .then(character => {
+          renderCharDetails(character)
+        })
+        
+      }
+    })
 
 
   }
 
-
-
-
+  clickHandler()
   getChars()
 })
