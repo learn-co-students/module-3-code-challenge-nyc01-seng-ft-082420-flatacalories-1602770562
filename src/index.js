@@ -45,9 +45,10 @@ function fetchInfo(target) {
 }
 
 function renderInfo(charObj) {
-    //save selected character's calories on back-end
+    //save selected character's calories & id on back-end for patch request
     currentCalories = parseInt(charObj.calories)
     currentId = charObj.id;
+
     // console.log(currentCalories)
 
     const infoDiv = document.querySelector("#detailed-info")
@@ -57,11 +58,12 @@ function renderInfo(charObj) {
     <h4>Total Calories: <span id="calories">${charObj.calories}</span> </h4>
     <form id="calories-form">
         <input type="hidden" value="${charObj.id}" id="characterId"/>
-        <input type="text" placeholder="Enter Calories" id="calories"/>
+        <input type="text" placeholder="Enter Calories" id="calories" name="calories"/>
         <input type="submit" data-id="${charObj.id} value="Add Calories"/>
     </form>
     <button id="reset-btn">Reset Calories</button>
     `
+    document.querySelector(".characterInfo").append(infoDiv)
 }
 
 
@@ -70,10 +72,9 @@ function submitHandler() {
     const form = document.querySelector("#calories-form")
     document.addEventListener("submit", e => {
         e.preventDefault()
-        // console.log("hi")
-        // console.log(form.characterId.value)
+        console.log(form.calories.value)
         const patch = {
-            calories : 5
+            calories : currentCalories += form.calories.value
         }
         const options = {
             method: "PATCH",
@@ -85,7 +86,14 @@ function submitHandler() {
         }
         fetch(BASE_URL + currentId, options)
         .then(res => res.json())
-        .then(console.log)
-        //console.log(patch)
+        .then(renderUpdatedCals)
+        form.reset()
+        
     })
+}
+
+function renderUpdatedCals(obj) {
+    //console.log(document.querySelector("#calories"))
+    document.querySelector("#calories").innerHTML = obj.calories
+    //.textContent = obj.calories
 }
