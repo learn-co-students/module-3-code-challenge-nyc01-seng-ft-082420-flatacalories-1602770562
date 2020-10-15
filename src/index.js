@@ -1,8 +1,11 @@
 const BASE_URL = 'http://localhost:3000/characters/'
+let currentCalories;
+let currentId;
 
 document.addEventListener("DOMContentLoaded", () => {
     fetchChars()
     clickHandler()
+    submitHandler()
 })
 
 
@@ -42,21 +45,47 @@ function fetchInfo(target) {
 }
 
 function renderInfo(charObj) {
-    console.log(charObj)
+    //save selected character's calories on back-end
+    currentCalories = parseInt(charObj.calories)
+    currentId = charObj.id;
+    // console.log(currentCalories)
+
     const infoDiv = document.querySelector("#detailed-info")
     infoDiv.innerHTML = `
     <p id="name">${charObj.name}</p>
     <img id="image" src=${charObj.image}>
     <h4>Total Calories: <span id="calories">${charObj.calories}</span> </h4>
     <form id="calories-form">
-        <input type="hidden" value="Character's id" id="${charObj.id}"/>
+        <input type="hidden" value="${charObj.id}" id="characterId"/>
         <input type="text" placeholder="Enter Calories" id="calories"/>
-        <input type="submit" value="Add Calories"/>
+        <input type="submit" data-id="${charObj.id} value="Add Calories"/>
     </form>
     <button id="reset-btn">Reset Calories</button>
     `
-
-
-   
 }
 
+
+
+function submitHandler() {
+    const form = document.querySelector("#calories-form")
+    document.addEventListener("submit", e => {
+        e.preventDefault()
+        // console.log("hi")
+        // console.log(form.characterId.value)
+        const patch = {
+            calories : 5
+        }
+        const options = {
+            method: "PATCH",
+            headers: {
+                "content-type" :"application/json",
+                accept: "application/json"
+            },
+            body: JSON.stringify(patch) 
+        }
+        fetch(BASE_URL + currentId, options)
+        .then(res => res.json())
+        .then(console.log)
+        //console.log(patch)
+    })
+}
