@@ -39,6 +39,9 @@ render character info
 
 
 3. Clicks on "Add Calories" button to add calories to a Character. Persist calories value to the server and update the DOM.
+click handler
+patch request
+rerenderstats
 
 ## Advanced Deliverables
 
