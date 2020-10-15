@@ -32,6 +32,25 @@ document.addEventListener('DOMContentLoaded', e => {
             const button = e.target
             const charId = button.dataset.id
             console.log(charId)
+            const name = button.innerText
+            
+            
+            
+            const charInfo = document.querySelector(".characterInfo")
+            
+            charInfo.innherHTML = `
+            <div id="detailed-info">
+            <p id="name">${name}</p>
+            <img id="image" src="assets/dummy.gif"><!-- display character image here -->
+            <h4>Total Calories: <span id="calories">Character's Calories</span> </h4>
+            <form id="calories-form">
+                <input type="hidden" value="Character's id" id="characterId"/> <!-- Assign character id as a value here -->
+                <input type="text" placeholder="Enter Calories" id="calories"/>
+                <input type="submit" value="Add Calories"/>
+            </form>
+            <button id="reset-btn">Reset Calories</button>
+        </div>
+            `
         }
     })
 
