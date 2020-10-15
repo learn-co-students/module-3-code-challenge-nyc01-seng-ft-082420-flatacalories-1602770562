@@ -35,13 +35,7 @@ document.addEventListener('DOMContentLoaded', e => {
           cImage.src = cData.image
           calories.textContent = cData.calories
         })
-      } else if (e.target.matches('#reset-btn')) {
-        let calories = document.getElementById('calories')
-        calories.textContent = "0"
-        const cButton = e.target
-        cId = cButton.dataset.characterId
-
-      }
+      } else if (e.target.matches('#reset-btn')) {setCalories(0)}
     })
   }
 
@@ -75,6 +69,7 @@ document.addEventListener('DOMContentLoaded', e => {
       const cId = caloriesForm.dataset.characterId
 
       setCalories(calorieCount)
+      caloriesForm.reset()
     })
 
   }
