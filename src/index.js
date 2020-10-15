@@ -27,6 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const characterSpan = e.target
         const characterId = characterSpan.dataset.characterId
         getCharacterDetail(characterId)
+      } else if(e.target.id === 'reset-btn') {
+        console.log('reset those calories')
       }
     })
   }
@@ -38,10 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const renderCharacterDetail = characterObj => {
+    const charDiv = document.querySelector('#detailed-info')
     const charName = document.querySelector('#name')
     const charImg = document.querySelector('#image')
     const charCal = document.querySelector('#calories')
 
+    charDiv.dataset.characterId = characterObj.id
     charName.textContent = characterObj.name
     charImg.src = characterObj.image
     charCal.textContent = characterObj.calories
@@ -50,6 +54,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const submitHandler = () => {
     const caloriesForm = document.querySelector('#calories-form')
+    caloriesForm.addEventListener('submit', e => {
+      e.preventDefault()
+      const caloriesForm = e.target
+      const characterId = caloriesForm.closest('div').dataset.characterId
+
+      const currentCalories = parseInt(document.querySelector('#calories').textContent)
+      const caloriesToAdd = parseInt(caloriesForm.querySelector('#calories').value)
+      const updatedCalories = currentCalories + caloriesToAdd
+      
+      caloriesForm.reset()
+      
+      const options = {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+          "accept": "application/json"
+        },
+        body: JSON.stringify({calories: updatedCalories})
+      }
+
+      fetch(baseUrl + characterId, options)
+        .then(response => response.json())
+        .then(renderCharacterDetail)
+      
+    })
   }
 
   submitHandler()
@@ -71,5 +100,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 3. Clicks on "Add Calories" button to add calories to a Character. Persist calories value to the server and update the DOM.
 
-// - PATCH to the character path with the calories from form
-// - Update the DOM
+// ✅ - PATCH to the character path with the calories from form
+//✅  - Update the DOM
