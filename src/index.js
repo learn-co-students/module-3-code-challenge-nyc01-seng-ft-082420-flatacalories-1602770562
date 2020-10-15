@@ -45,10 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
         calories: newCalories
       })
     }
-
     fetch(baseUrl + id, options)
     .then(response => response.json())
-    // .then(console.log)
     .then(renderDetailedCharacter)
   }
 
@@ -67,13 +65,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const renderDetailedCharacter = (character) => {
+    console.log(character)
     let detailedDiv = document.querySelector('#detailed-info');
 
     detailedDiv.querySelector('#name').textContent = character.name
     let calories = detailedDiv.querySelector('#calories').textContent = character.calories
+    console.log(character.calories)
     detailedDiv.querySelector('#image').src = character.image
 
     watchFormSubmit(character.id, calories)
+    // watchReset(character.id)
   }
   
 
@@ -91,13 +92,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const calorieForm = document.querySelector('#calories-form');
     calorieForm.addEventListener('submit', e => {
       e.preventDefault();
-      let caloriesAdding = calorieForm.calories.value
-      console.log(calories)
+      let caloriesAdding = parseInt(calorieForm.calories.value)
+      // console.log(caloriesAdding)
       newCalories = parseInt(calories)+ parseInt(caloriesAdding)
       addCalories(id, newCalories)
       calorieForm.reset()
     })
   }
+
+  // this works but I turned it off
+
+  // const watchReset = (id) => {
+  //   document.addEventListener('click', e => {
+  //     if(e.target.matches('#reset-btn')){
+  //       addCalories(id, 0)
+  //     }
+  //   })
+  // }
 
   clickHandler()
   getCharacters()
